@@ -6,6 +6,7 @@ import { StyleShowcase } from "@/components/StyleShowcase";
 import { ArtistGallery } from "@/components/ArtistGallery";
 import { LearningCenter } from "@/components/LearningCenter";
 import { ProfessionalFeatures } from "@/components/ProfessionalFeatures";
+import { QualityEthics } from "@/components/QualityEthics";
 import { PremiumFooter } from "@/components/PremiumFooter";
 
 const Index = () => {
@@ -19,6 +20,7 @@ const Index = () => {
         <ArtistGallery />
         <LearningCenter />
         <ProfessionalFeatures />
+        <QualityEthics />
       </main>
       <PremiumFooter />
     </div>
