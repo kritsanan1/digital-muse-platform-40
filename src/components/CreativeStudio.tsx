@@ -4,13 +4,14 @@ import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Camera, Image, Star, Settings, Palette, Grid3X3, Sun, Moon, Lightbulb, Save, History, Share2, Download, Play, AlertCircle, X, Brush } from "lucide-react";
+import { Camera, Image, Star, Settings, Palette, Grid3X3, Sun, Moon, Lightbulb, Save, History, Share2, Download, Play, AlertCircle, X, Brush, BarChart3 } from "lucide-react";
 import { useState } from "react";
 import { useGeneration } from "@/contexts/GenerationContext";
 import { replicateService } from "@/services/replicate";
 import { ApiTokenSetup } from "./ApiTokenSetup";
 import { GenerationProgress } from "./GenerationProgress";
 import { StyleSystem } from "./StyleSystem";
+import { ProfessionalDashboard } from "./ProfessionalDashboard";
 
 export const CreativeStudio = () => {
   const { state, generateImage, clearError, hasApiToken } = useGeneration();
@@ -130,7 +131,7 @@ export const CreativeStudio = () => {
 
         {/* Main Studio Tabs */}
         <Tabs defaultValue="create" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 bg-black/20 mb-6">
+          <TabsList className="grid w-full grid-cols-4 bg-black/20 mb-6">
             <TabsTrigger value="create" className="flex items-center space-x-2">
               <Camera className="w-4 h-4" />
               <span>Create</span>
@@ -138,6 +139,14 @@ export const CreativeStudio = () => {
             <TabsTrigger value="styles" className="flex items-center space-x-2">
               <Brush className="w-4 h-4" />
               <span>Style System</span>
+            </TabsTrigger>
+            <TabsTrigger value="dashboard" className="flex items-center space-x-2">
+              <BarChart3 className="w-4 h-4" />
+              <span>Dashboard</span>
+            </TabsTrigger>
+            <TabsTrigger value="analytics" className="flex items-center space-x-2">
+              <Settings className="w-4 h-4" />
+              <span>Analytics</span>
             </TabsTrigger>
           </TabsList>
 
@@ -490,6 +499,22 @@ export const CreativeStudio = () => {
 
           <TabsContent value="styles">
             <StyleSystem />
+          </TabsContent>
+
+          <TabsContent value="dashboard">
+            <ProfessionalDashboard />
+          </TabsContent>
+
+          <TabsContent value="analytics">
+            <div className="text-center py-20">
+              <BarChart3 className="w-16 h-16 mx-auto mb-4 text-gold-400/50" />
+              <h3 className="text-xl font-playfair font-semibold gradient-text mb-2">
+                Advanced Analytics Coming Soon
+              </h3>
+              <p className="text-foreground/60">
+                Detailed performance analytics and optimization insights will be available here
+              </p>
+            </div>
           </TabsContent>
         </Tabs>
       </div>
