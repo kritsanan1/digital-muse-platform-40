@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   User, Award, MapPin, Calendar, Eye, Heart, Share2, 
-  Follow, MessageCircle, Star, Grid, List, Filter
+  UserPlus, MessageCircle, Star, Grid, List, Filter
 } from "lucide-react";
 
 interface ArtistProfileProps {
@@ -102,7 +102,7 @@ export const ArtistProfile = ({ artist, artworks }: ArtistProfileProps) => {
                 onClick={() => setIsFollowing(!isFollowing)}
                 className={isFollowing ? "border-gold-500/30 text-gold-400" : "bg-gradient-to-r from-gold-500 to-gold-600 text-black"}
               >
-                <Follow className="w-4 h-4 mr-2" />
+                <UserPlus className="w-4 h-4 mr-2" />
                 {isFollowing ? "Following" : "Follow"}
               </Button>
               

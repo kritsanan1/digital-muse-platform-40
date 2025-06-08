@@ -19,12 +19,13 @@ export const ArtistGallery = () => {
 
   const featuredArtworks = [
     {
-      id: 1,
+      id: "1",
       image: "https://i.postimg.cc/3rn5hbYH/LINE-ALBUM-2025-5-30-250607-22.jpg",
       title: "Ethereal Portrait",
       artist: "Sarah Chen",
       style: "Fashion Photography",
       likes: 2840,
+      views: 15400,
       technique: "Studio Lighting",
       created: "2024-01-15",
       description: "A captivating portrait that explores the interplay between light and shadow, creating an ethereal quality that transcends traditional fashion photography.",
@@ -32,12 +33,13 @@ export const ArtistGallery = () => {
       license: "Creative Commons"
     },
     {
-      id: 2,
+      id: "2",
       image: "https://i.postimg.cc/ZKnk5F5v/LINE-ALBUM-2025-5-30-250607-23.jpg",
       title: "Urban Elegance",
       artist: "Marcus Rodriguez",
       style: "Street Portrait",
       likes: 1920,
+      views: 8900,
       technique: "Natural Light",
       created: "2024-02-03",
       description: "Street photography meets high fashion in this compelling urban portrait series.",
@@ -45,12 +47,13 @@ export const ArtistGallery = () => {
       license: "Commercial"
     },
     {
-      id: 3,
+      id: "3",
       image: "https://i.postimg.cc/0NghnTd7/LINE-ALBUM-2025-5-30-250607-24.jpg",
       title: "Golden Hour",
       artist: "Elena Kozlov",
       style: "Conceptual Art",
       likes: 3150,
+      views: 12200,
       technique: "Natural Light",
       created: "2024-01-28",
       description: "Captured during the magic hour, this piece explores themes of time and transformation.",
@@ -58,12 +61,13 @@ export const ArtistGallery = () => {
       license: "Attribution"
     },
     {
-      id: 4,
+      id: "4",
       image: "https://i.postimg.cc/nLvgP30g/LINE-ALBUM-2025-5-30-250607-25.jpg",
       title: "Artistic Vision",
       artist: "James Park",
       style: "Fine Art",
       likes: 2670,
+      views: 9800,
       technique: "Studio Lighting",
       created: "2024-02-12",
       description: "A bold exploration of contemporary portraiture that challenges conventional beauty standards.",
@@ -71,12 +75,13 @@ export const ArtistGallery = () => {
       license: "Creative Commons"
     },
     {
-      id: 5,
+      id: "5",
       image: "https://i.postimg.cc/769cxfvN/LINE-ALBUM-2025-5-30-250607-26.jpg",
       title: "Modern Beauty",
       artist: "Aria Thompson",
       style: "Beauty Photography",
       likes: 4200,
+      views: 18600,
       technique: "Soft Focus",
       created: "2024-01-22",
       description: "Redefining beauty through innovative lighting techniques and artistic composition.",
@@ -84,12 +89,13 @@ export const ArtistGallery = () => {
       license: "Commercial"
     },
     {
-      id: 6,
+      id: "6",
       image: "https://i.postimg.cc/yxrbZt8g/LINE-ALBUM-2025-5-30-250607-27.jpg",
       title: "Creative Expression",
       artist: "David Kim",
       style: "Abstract Art",
       likes: 1580,
+      views: 6700,
       technique: "Experimental",
       created: "2024-02-18",
       description: "An abstract interpretation of human emotion expressed through color and form.",
