@@ -7,7 +7,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   FileText, Shield, Users, Globe, AlertTriangle, 
-  CheckCircle, Info, Book, Scale, Heart
+  CheckCircle, Info, Book, Scale, Heart, Bell
 } from "lucide-react";
 
 interface PolicyCategory {
@@ -138,7 +138,7 @@ export const ContentPolicy = () => {
             </Card>
           ))}
         </div>
-      </div>
+      </Card>
 
       {/* Policy Categories */}
       <Tabs defaultValue="professional" className="w-full">
