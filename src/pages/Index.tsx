@@ -1,6 +1,7 @@
 
 import { PremiumHeader } from "@/components/PremiumHeader";
-import { HeroSection } from "@/components/HeroSection";
+import { EnhancedHeroSection } from "@/components/EnhancedHeroSection";
+import { ProfessionalWorkspace } from "@/components/ProfessionalWorkspace";
 import { CreativeStudio } from "@/components/CreativeStudio";
 import { StyleShowcase } from "@/components/StyleShowcase";
 import { ArtistGallery } from "@/components/ArtistGallery";
@@ -14,7 +15,8 @@ const Index = () => {
     <div className="min-h-screen bg-background text-foreground">
       <PremiumHeader />
       <main>
-        <HeroSection />
+        <EnhancedHeroSection />
+        <ProfessionalWorkspace />
         <CreativeStudio />
         <StyleShowcase />
         <ArtistGallery />
