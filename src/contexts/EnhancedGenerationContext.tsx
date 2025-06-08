@@ -120,36 +120,36 @@ export const EnhancedGenerationProvider: React.FC<{ children: React.ReactNode }>
             quality: Math.random() * 20 + 80 // Simulated quality score
           };
 
-          setState(prev => ({
-            ...prev,
+          setState(prevState => ({
+            ...prevState,
             isGenerating: false,
             currentImage: optimizedUrl,
-            history: [newImage, ...prev.history.slice(0, 49)], // Keep last 50
+            history: [newImage, ...prevState.history.slice(0, 49)], // Keep last 50
             progress: 100,
             processingMetrics: {
-              ...prev.processingMetrics,
-              costThisSession: prev.processingMetrics.costThisSession + cost
+              ...prevState.processingMetrics,
+              costThisSession: prevState.processingMetrics.costThisSession + cost
             }
           }));
 
           // Preload similar images for better UX
-          if (prev.history.length > 0) {
-            const similarUrls = prev.history.slice(0, 3).map(img => img.url);
+          if (prevState.history.length > 0) {
+            const similarUrls = prevState.history.slice(0, 3).map(img => img.url);
             performanceOptimizer.preloadImages(similarUrls, 'low');
           }
 
         } else if (statusResponse.status === 'failed') {
           clearInterval(progressInterval);
-          setState(prev => ({
-            ...prev,
+          setState(prevState => ({
+            ...prevState,
             isGenerating: false,
             error: statusResponse.error || 'Generation failed'
           }));
         } else {
           // Continue polling with enhanced progress tracking
-          setState(prev => ({
-            ...prev,
-            progress: statusResponse.progress || Math.min(prev.progress + 5, 85),
+          setState(prevState => ({
+            ...prevState,
+            progress: statusResponse.progress || Math.min(prevState.progress + 5, 85),
             queuePosition: statusResponse.queuePosition,
             estimatedWaitTime: statusResponse.estimatedWaitTime
           }));
@@ -174,18 +174,18 @@ export const EnhancedGenerationProvider: React.FC<{ children: React.ReactNode }>
           cost: 0
         };
 
-        setState(prev => ({
-          ...prev,
+        setState(prevState => ({
+          ...prevState,
           isGenerating: false,
           currentImage: optimizedUrl,
-          history: [newImage, ...prev.history.slice(0, 49)],
+          history: [newImage, ...prevState.history.slice(0, 49)],
           progress: 100
         }));
       }
 
     } catch (error) {
-      setState(prev => ({
-        ...prev,
+      setState(prevState => ({
+        ...prevState,
         isGenerating: false,
         error: error instanceof Error ? error.message : 'Generation failed'
       }));

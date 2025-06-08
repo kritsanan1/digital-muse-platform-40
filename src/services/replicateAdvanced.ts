@@ -378,6 +378,45 @@ export class AdvancedReplicateService {
     }
   }
 
+  // Add the missing checkStatus method
+  async checkStatus(predictionId: string): Promise<any> {
+    try {
+      if (!this.apiToken) {
+        throw new Error('API token not set');
+      }
+
+      const response = await fetch(`${this.baseUrl}/predictions/${predictionId}`, {
+        headers: {
+          'Authorization': `Token ${this.apiToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      
+      // Add progress estimation based on status
+      let progress = 0;
+      if (result.status === 'starting') progress = 10;
+      else if (result.status === 'processing') progress = 50;
+      else if (result.status === 'succeeded') progress = 100;
+      else if (result.status === 'failed') progress = 0;
+
+      return {
+        ...result,
+        progress,
+        queuePosition: this.jobQueue.findIndex(job => job.id === predictionId) + 1,
+        estimatedWaitTime: this.estimateProcessingTime(result.model || 'default')
+      };
+    } catch (error) {
+      console.error('Error checking status:', error);
+      throw error;
+    }
+  }
+
   // Helper methods
   private getAvailableModels() {
     return [

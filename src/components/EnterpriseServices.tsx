@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -6,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { 
   Users, Settings, Crown, Phone, Headphones, Star,
-  Calendar, Clock, CheckCircle, FileText, Zap, Award
+  Calendar, Clock, CheckCircle, FileText, Zap, Award, BarChart3
 } from "lucide-react";
 
 export const EnterpriseServices = () => {
