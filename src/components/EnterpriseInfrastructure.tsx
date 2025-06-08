@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -152,11 +151,11 @@ export const EnterpriseInfrastructure = () => {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-sm">Recovery Point Objective</span>
-                <Badge className="bg-blue-500/20 text-blue-400">< 1 hour</Badge>
+                <Badge className="bg-blue-500/20 text-blue-400">Less than 1 hour</Badge>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-sm">Recovery Time Objective</span>
-                <Badge className="bg-green-500/20 text-green-400">< 4 hours</Badge>
+                <Badge className="bg-green-500/20 text-green-400">Less than 4 hours</Badge>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-sm">Backup Retention</span>

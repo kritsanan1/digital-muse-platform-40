@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -55,18 +54,18 @@ export const EnterpriseServices = () => {
                     <p className="text-sm text-foreground/60">ETA: {request.eta}</p>
                   </div>
                   <div className="flex items-center space-x-3">
-                    <Badge className={`${
+                    <Badge className={
                       request.priority === 'High' ? 'bg-red-500/20 text-red-400' :
                       request.priority === 'Medium' ? 'bg-yellow-500/20 text-yellow-400' :
                       'bg-green-500/20 text-green-400'
-                    }`}>
+                    }>
                       {request.priority}
                     </Badge>
-                    <Badge className={`${
+                    <Badge className={
                       request.status === 'Completed' ? 'bg-green-500/20 text-green-400' :
                       request.status === 'In Progress' ? 'bg-blue-500/20 text-blue-400' :
                       'bg-purple-500/20 text-purple-400'
-                    }`}>
+                    }>
                       {request.status}
                     </Badge>
                   </div>
@@ -189,7 +188,7 @@ export const EnterpriseServices = () => {
               <h3 className="text-lg font-playfair font-semibold gradient-text mb-4">Support Metrics</h3>
               <div className="space-y-4">
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-green-400">< 15 min</p>
+                  <p className="text-3xl font-bold text-green-400">Less than 15 min</p>
                   <p className="text-sm text-foreground/60">Average Response Time</p>
                 </div>
                 <div className="text-center">

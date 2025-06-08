@@ -258,7 +258,7 @@ export const EnterpriseControlCenter = () => {
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <span>Response Time</span>
-                  <span className="text-green-400">< 2 minutes</span>
+                  <span className="text-green-400">Less than 2 minutes</span>
                 </div>
               </div>
             </Card>
@@ -526,11 +526,11 @@ export const EnterpriseControlCenter = () => {
                 <p className="text-sm text-foreground/60">Uptime Guarantee</p>
               </div>
               <div className="text-center">
-                <p className="text-2xl font-bold text-blue-400">< 1hr</p>
+                <p className="text-2xl font-bold text-blue-400">Less than 1hr</p>
                 <p className="text-sm text-foreground/60">Critical Response</p>
               </div>
               <div className="text-center">
-                <p className="text-2xl font-bold text-gold-400">< 87ms</p>
+                <p className="text-2xl font-bold text-gold-400">Less than 87ms</p>
                 <p className="text-sm text-foreground/60">API Response Time</p>
               </div>
               <div className="text-center">
