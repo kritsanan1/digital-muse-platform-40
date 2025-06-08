@@ -1,13 +1,19 @@
-
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Camera, Image, Star, Settings, Palette, Grid3X3, Sun, Moon, Lightbulb, Save, History, Share2, Download, Play } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Camera, Image, Star, Settings, Palette, Grid3X3, Sun, Moon, Lightbulb, Save, History, Share2, Download, Play, AlertCircle } from "lucide-react";
 import { useState } from "react";
+import { useGeneration } from "@/contexts/GenerationContext";
+import { replicateService } from "@/services/replicate";
+import { ApiTokenSetup } from "./ApiTokenSetup";
+import { GenerationProgress } from "./GenerationProgress";
 
 export const CreativeStudio = () => {
+  const { state, generateImage, clearError, hasApiToken } = useGeneration();
+  const [selectedModel, setSelectedModel] = useState("stability-ai/sdxl:39ed52f2a78e934b3ba6e2a89f5b1c712de7dfea535525255b1aa35c5565e08b");
   const [selectedStyle, setSelectedStyle] = useState("photorealistic");
   const [prompt, setPrompt] = useState("Professional fashion portrait with dramatic studio lighting");
   const [artisticStyle, setArtisticStyle] = useState([75]);
@@ -55,6 +61,46 @@ export const CreativeStudio = () => {
     "Abstract artistic composition with flowing organic shapes and vibrant colors"
   ];
 
+  const availableModels = replicateService.getAvailableModels();
+
+  const handleGenerate = async () => {
+    if (!prompt.trim()) return;
+
+    const generationParams = {
+      prompt,
+      model: selectedModel,
+      style: selectedStyle,
+      lighting,
+      composition,
+      artisticStyle: artisticStyle[0],
+      creativity: creativity[0],
+      mood: mood[0],
+      width: 1024,
+      height: 1024
+    };
+
+    await generateImage(generationParams);
+  };
+
+  if (!hasApiToken) {
+    return (
+      <section id="studio" className="py-20 relative">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-4xl lg:text-5xl font-playfair font-bold mb-6">
+              Professional Creative{" "}
+              <span className="gradient-text">Studio</span>
+            </h2>
+            <p className="text-xl text-foreground/70 max-w-3xl mx-auto mb-8">
+              Connect your Replicate API to start creating professional artwork
+            </p>
+          </div>
+          <ApiTokenSetup />
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="studio" className="py-20 relative">
       <div className="container mx-auto px-6">
@@ -68,12 +114,49 @@ export const CreativeStudio = () => {
           </p>
         </div>
 
+        {/* Error Alert */}
+        {state.error && (
+          <Alert className="mb-6 border-red-500/20 bg-red-500/5">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription className="flex items-center justify-between">
+              <span>{state.error}</span>
+              <Button variant="ghost" size="sm" onClick={clearError}>
+                <X className="w-4 h-4" />
+              </Button>
+            </AlertDescription>
+          </Alert>
+        )}
+
         {/* Split-screen Layout */}
         <div className="grid lg:grid-cols-5 gap-6 min-h-[800px]">
           
           {/* Left Panel - Controls */}
           <div className="lg:col-span-2 space-y-6">
             
+            {/* Model Selection */}
+            <Card className="glass-card p-6">
+              <h3 className="text-lg font-playfair font-semibold mb-4 gradient-text">AI Model</h3>
+              <div className="space-y-2">
+                {availableModels.map((model) => (
+                  <button
+                    key={model.id}
+                    onClick={() => setSelectedModel(model.id)}
+                    className={`w-full text-left p-3 rounded-lg border transition-all ${
+                      selectedModel === model.id
+                        ? 'border-gold-500 bg-gold-500/10'
+                        : 'border-gold-500/20 bg-black/20 hover:border-gold-500/40'
+                    }`}
+                  >
+                    <div className="font-semibold text-sm">{model.name}</div>
+                    <div className="text-xs text-foreground/60">{model.description}</div>
+                    <Badge variant="outline" className="mt-1 text-xs">
+                      {model.category}
+                    </Badge>
+                  </button>
+                ))}
+              </div>
+            </Card>
+
             {/* Project Management */}
             <Card className="glass-card p-6">
               <div className="flex items-center justify-between mb-4">
@@ -90,8 +173,8 @@ export const CreativeStudio = () => {
                 </div>
               </div>
               <div className="text-sm text-foreground/60">
-                <p>Current Session: "Fashion Portrait Series"</p>
-                <p>Last saved: 2 minutes ago</p>
+                <p>Generated Images: {state.history.length}</p>
+                <p>Last generated: {state.history[0] ? new Date(state.history[0].timestamp).toLocaleTimeString() : 'None'}</p>
               </div>
             </Card>
 
@@ -274,90 +357,117 @@ export const CreativeStudio = () => {
           {/* Right Panel - Canvas & Preview */}
           <div className="lg:col-span-3 space-y-6">
             
-            {/* Main Canvas */}
-            <Card className="glass-card p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-playfair font-semibold gradient-text">Creative Canvas</h3>
-                <div className="flex space-x-2">
-                  <Button variant="outline" size="sm" className="border-gold-500/30">
-                    <Share2 className="w-4 h-4 mr-2" />
-                    Share
-                  </Button>
-                  <Button variant="outline" size="sm" className="border-gold-500/30">
-                    <Download className="w-4 h-4 mr-2" />
-                    Export
-                  </Button>
-                </div>
-              </div>
-              
-              {/* Prompt Input */}
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-2 text-gold-400">Creative Vision</label>
-                <textarea
-                  value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
-                  className="w-full bg-black/30 border border-gold-500/20 rounded-lg p-4 text-foreground focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors resize-none"
-                  rows={3}
-                  placeholder="Describe your artistic vision..."
-                />
-              </div>
-
-              {/* Canvas Area with Composition Guide */}
-              <div className="relative aspect-square bg-black/30 rounded-lg border border-gold-500/20 overflow-hidden">
-                <img
-                  src="https://i.postimg.cc/MGvX0j5n/LINE-ALBUM-2025-5-30-250607-1.jpg"
-                  alt="Canvas preview"
-                  className="w-full h-full object-cover"
-                />
-                
-                {/* Composition Grid Overlay */}
-                {composition === "rule-of-thirds" && (
-                  <div className="absolute inset-0 pointer-events-none">
-                    <div className="w-full h-full grid grid-cols-3 grid-rows-3">
-                      {[...Array(9)].map((_, i) => (
-                        <div key={i} className="border border-gold-500/20" />
-                      ))}
-                    </div>
-                  </div>
-                )}
-                
-                {/* Generation Status */}
-                <div className="absolute bottom-4 left-4 right-4">
-                  <div className="bg-black/50 backdrop-blur-md rounded-lg p-3 flex items-center justify-between">
-                    <div className="text-sm text-foreground/80">
-                      Resolution: 1024×1024 • Style: {selectedStyle} • {lighting} lighting
-                    </div>
-                    <Button size="sm" className="bg-gradient-to-r from-gold-500 to-gold-600 text-black hover:from-gold-400 hover:to-gold-500">
-                      <Play className="w-4 h-4 mr-2" />
-                      Generate
+            {/* Generation Progress or Main Canvas */}
+            {state.isGenerating ? (
+              <GenerationProgress 
+                progress={state.progress}
+                prompt={prompt}
+              />
+            ) : (
+              <Card className="glass-card p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-playfair font-semibold gradient-text">Creative Canvas</h3>
+                  <div className="flex space-x-2">
+                    <Button variant="outline" size="sm" className="border-gold-500/30">
+                      <Share2 className="w-4 h-4 mr-2" />
+                      Share
+                    </Button>
+                    <Button variant="outline" size="sm" className="border-gold-500/30">
+                      <Download className="w-4 h-4 mr-2" />
+                      Export
                     </Button>
                   </div>
                 </div>
-              </div>
-            </Card>
+                
+                {/* Prompt Input */}
+                <div className="mb-4">
+                  <label className="block text-sm font-medium mb-2 text-gold-400">Creative Vision</label>
+                  <textarea
+                    value={prompt}
+                    onChange={(e) => setPrompt(e.target.value)}
+                    className="w-full bg-black/30 border border-gold-500/20 rounded-lg p-4 text-foreground focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors resize-none"
+                    rows={3}
+                    placeholder="Describe your artistic vision..."
+                  />
+                </div>
 
-            {/* Version History */}
-            <Card className="glass-card p-6">
-              <h3 className="text-lg font-playfair font-semibold mb-4 gradient-text">Version History</h3>
-              <div className="grid grid-cols-4 gap-3">
-                {[
-                  "https://i.postimg.cc/PfmJMHWQ/LINE-ALBUM-2025-5-30-250607-4.jpg",
-                  "https://i.postimg.cc/28G5PxXq/LINE-ALBUM-2025-5-30-250607-5.jpg",
-                  "https://i.postimg.cc/pVYVFZv0/LINE-ALBUM-2025-5-30-250607-6.jpg",
-                  "https://i.postimg.cc/tTFqDdx4/LINE-ALBUM-2025-5-30-250607-7.jpg"
-                ].map((image, index) => (
-                  <div key={index} className="relative artistic-frame premium-hover aspect-square group">
+                {/* Canvas Area */}
+                <div className="relative aspect-square bg-black/30 rounded-lg border border-gold-500/20 overflow-hidden">
+                  {state.currentImage ? (
                     <img
-                      src={image}
-                      alt={`Version ${index + 1}`}
+                      src={state.currentImage}
+                      alt="Generated artwork"
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <Badge className="bg-gold-500 text-black">v{index + 1}</Badge>
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-foreground/40">
+                      <div className="text-center">
+                        <Image className="w-16 h-16 mx-auto mb-4 opacity-50" />
+                        <p>Your generated artwork will appear here</p>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Composition Grid Overlay */}
+                  {composition === "rule-of-thirds" && (
+                    <div className="absolute inset-0 pointer-events-none opacity-30">
+                      <div className="w-full h-full grid grid-cols-3 grid-rows-3">
+                        {[...Array(9)].map((_, i) => (
+                          <div key={i} className="border border-gold-500/20" />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Generation Controls */}
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="bg-black/70 backdrop-blur-md rounded-lg p-3 flex items-center justify-between">
+                      <div className="text-sm text-foreground/80">
+                        Model: {availableModels.find(m => m.id === selectedModel)?.name} • {lighting} lighting
+                      </div>
+                      <Button 
+                        size="sm" 
+                        onClick={handleGenerate}
+                        disabled={state.isGenerating || !prompt.trim()}
+                        className="bg-gradient-to-r from-gold-500 to-gold-600 text-black hover:from-gold-400 hover:to-gold-500"
+                      >
+                        <Play className="w-4 h-4 mr-2" />
+                        Generate
+                      </Button>
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              </Card>
+            )}
+
+            {/* Generation History */}
+            <Card className="glass-card p-6">
+              <h3 className="text-lg font-playfair font-semibold mb-4 gradient-text">Generation History</h3>
+              {state.history.length > 0 ? (
+                <div className="grid grid-cols-4 gap-3">
+                  {state.history.slice(0, 8).map((image, index) => (
+                    <div key={image.id} className="relative artistic-frame premium-hover aspect-square group">
+                      <img
+                        src={image.url}
+                        alt={`Generated ${index + 1}`}
+                        className="w-full h-full object-cover cursor-pointer"
+                        onClick={() => {/* Set as current image */}}
+                      />
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <Badge className="bg-gold-500 text-black text-xs">
+                          {new Date(image.timestamp).toLocaleTimeString()}
+                        </Badge>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center text-foreground/50 py-8">
+                  <History className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                  <p>No generated images yet</p>
+                  <p className="text-sm">Create your first artwork above</p>
+                </div>
+              )}
             </Card>
           </div>
         </div>
