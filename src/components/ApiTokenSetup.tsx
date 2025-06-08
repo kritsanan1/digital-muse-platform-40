@@ -59,7 +59,7 @@ export const ApiTokenSetup = () => {
           2. Create a new token
           <br />
           3. Copy and paste it below
-        </p>
+        </AlertDescription>
       </Alert>
 
       <form onSubmit={handleSubmit} className="space-y-4">
