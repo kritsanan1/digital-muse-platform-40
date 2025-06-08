@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/HeroSection";
 import { CreativeStudio } from "@/components/CreativeStudio";
 import { StyleShowcase } from "@/components/StyleShowcase";
 import { ArtistGallery } from "@/components/ArtistGallery";
+import { LearningCenter } from "@/components/LearningCenter";
 import { ProfessionalFeatures } from "@/components/ProfessionalFeatures";
 import { PremiumFooter } from "@/components/PremiumFooter";
 
@@ -16,6 +17,7 @@ const Index = () => {
         <CreativeStudio />
         <StyleShowcase />
         <ArtistGallery />
+        <LearningCenter />
         <ProfessionalFeatures />
       </main>
       <PremiumFooter />
