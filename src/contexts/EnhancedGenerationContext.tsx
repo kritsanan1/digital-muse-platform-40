@@ -120,23 +120,27 @@ export const EnhancedGenerationProvider: React.FC<{ children: React.ReactNode }>
             quality: Math.random() * 20 + 80 // Simulated quality score
           };
 
-          setState(prevState => ({
-            ...prevState,
-            isGenerating: false,
-            currentImage: optimizedUrl,
-            history: [newImage, ...prevState.history.slice(0, 49)], // Keep last 50
-            progress: 100,
-            processingMetrics: {
-              ...prevState.processingMetrics,
-              costThisSession: prevState.processingMetrics.costThisSession + cost
-            }
-          }));
+          setState(prevState => {
+            const updatedState = {
+              ...prevState,
+              isGenerating: false,
+              currentImage: optimizedUrl,
+              history: [newImage, ...prevState.history.slice(0, 49)], // Keep last 50
+              progress: 100,
+              processingMetrics: {
+                ...prevState.processingMetrics,
+                costThisSession: prevState.processingMetrics.costThisSession + cost
+              }
+            };
 
-          // Preload similar images for better UX
-          if (prevState.history.length > 0) {
-            const similarUrls = prevState.history.slice(0, 3).map(img => img.url);
-            performanceOptimizer.preloadImages(similarUrls, 'low');
-          }
+            // Preload similar images for better UX
+            if (prevState.history.length > 0) {
+              const similarUrls = prevState.history.slice(0, 3).map(img => img.url);
+              performanceOptimizer.preloadImages(similarUrls, 'low');
+            }
+
+            return updatedState;
+          });
 
         } else if (statusResponse.status === 'failed') {
           clearInterval(progressInterval);
