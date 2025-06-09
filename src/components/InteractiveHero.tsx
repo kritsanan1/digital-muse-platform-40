@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -13,8 +12,14 @@ export const InteractiveHero = () => {
       name: "Fashion Photography",
       description: "Editorial elegance meets commercial sophistication",
       images: [
-        "https://i.postimg.cc/MGvX0j5n/LINE-ALBUM-2025-5-30-250607-1.jpg",
-        "https://i.postimg.cc/Y0fS2Nrs/LINE-ALBUM-2025-5-30-250607-2.jpg"
+        {
+          url: "https://i.postimg.cc/MGvX0j5n/LINE-ALBUM-2025-5-30-250607-1.jpg",
+          alt: "Professional fashion photography portrait with studio lighting showcasing editorial elegance and commercial sophistication"
+        },
+        {
+          url: "https://i.postimg.cc/Y0fS2Nrs/LINE-ALBUM-2025-5-30-250607-2.jpg",
+          alt: "High-end fashion portrait demonstrating AI-generated commercial photography with professional lighting"
+        }
       ],
       icon: Camera,
       gradient: "from-rose-500 to-pink-600"
@@ -23,8 +28,14 @@ export const InteractiveHero = () => {
       name: "Portrait Artistry",
       description: "Professional portraiture with artistic vision",
       images: [
-        "https://i.postimg.cc/SNksTPVF/LINE-ALBUM-2025-5-30-250607-3.jpg",
-        "https://i.postimg.cc/PfmJMHWQ/LINE-ALBUM-2025-5-30-250607-4.jpg"
+        {
+          url: "https://i.postimg.cc/SNksTPVF/LINE-ALBUM-2025-5-30-250607-3.jpg",
+          alt: "Artistic portrait photography showcasing professional portraiture with creative vision and studio mastery"
+        },
+        {
+          url: "https://i.postimg.cc/PfmJMHWQ/LINE-ALBUM-2025-5-30-250607-4.jpg",
+          alt: "Professional portrait art combining traditional photography techniques with AI-assisted artistic enhancement"
+        }
       ],
       icon: Star,
       gradient: "from-gold-500 to-amber-600"
@@ -33,8 +44,14 @@ export const InteractiveHero = () => {
       name: "Conceptual Art",
       description: "Creative expression through digital mastery",
       images: [
-        "https://i.postimg.cc/28G5PxXq/LINE-ALBUM-2025-5-30-250607-5.jpg",
-        "https://i.postimg.cc/pVYVFZv0/LINE-ALBUM-2025-5-30-250607-6.jpg"
+        {
+          url: "https://i.postimg.cc/28G5PxXq/LINE-ALBUM-2025-5-30-250607-5.jpg",
+          alt: "Conceptual digital art piece demonstrating creative expression and artistic vision through AI-powered creation"
+        },
+        {
+          url: "https://i.postimg.cc/pVYVFZv0/LINE-ALBUM-2025-5-30-250607-6.jpg",
+          alt: "Abstract conceptual artwork showcasing digital mastery and innovative artistic expression using AI tools"
+        }
       ],
       icon: Palette,
       gradient: "from-purple-500 to-violet-600"
@@ -175,8 +192,8 @@ export const InteractiveHero = () => {
                 {currentStyle.images.map((image, index) => (
                   <img
                     key={`${activeStyle}-${index}`}
-                    src={image}
-                    alt={`${currentStyle.name} example ${index + 1}`}
+                    src={image.url}
+                    alt={image.alt}
                     className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${
                       index === currentImageIndex 
                         ? 'opacity-100 scale-100' 
@@ -207,6 +224,7 @@ export const InteractiveHero = () => {
                           ? `bg-gradient-to-r ${currentStyle.gradient}` 
                           : 'bg-foreground/30'
                       }`}
+                      aria-label={`View ${currentStyle.name} example ${index + 1}`}
                     />
                   ))}
                 </div>

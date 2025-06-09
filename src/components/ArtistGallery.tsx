@@ -21,6 +21,7 @@ export const ArtistGallery = () => {
     {
       id: "1",
       image: "https://i.postimg.cc/3rn5hbYH/LINE-ALBUM-2025-5-30-250607-22.jpg",
+      alt: "Ethereal portrait featuring studio lighting with dramatic shadows and highlights, showcasing professional fashion photography techniques",
       title: "Ethereal Portrait",
       artist: "Sarah Chen",
       style: "Fashion Photography",
@@ -35,6 +36,7 @@ export const ArtistGallery = () => {
     {
       id: "2",
       image: "https://i.postimg.cc/ZKnk5F5v/LINE-ALBUM-2025-5-30-250607-23.jpg",
+      alt: "Urban elegance street portrait combining high fashion elements with natural lighting in an urban environment",
       title: "Urban Elegance",
       artist: "Marcus Rodriguez",
       style: "Street Portrait",
@@ -49,6 +51,7 @@ export const ArtistGallery = () => {
     {
       id: "3",
       image: "https://i.postimg.cc/0NghnTd7/LINE-ALBUM-2025-5-30-250607-24.jpg",
+      alt: "Golden hour portrait capturing warm natural lighting with artistic composition exploring themes of time and transformation",
       title: "Golden Hour",
       artist: "Elena Kozlov",
       style: "Conceptual Art",
@@ -63,6 +66,7 @@ export const ArtistGallery = () => {
     {
       id: "4",
       image: "https://i.postimg.cc/nLvgP30g/LINE-ALBUM-2025-5-30-250607-25.jpg",
+      alt: "Fine art portrait with studio lighting showcasing contemporary portraiture that challenges conventional beauty standards",
       title: "Artistic Vision",
       artist: "James Park",
       style: "Fine Art",
@@ -77,6 +81,7 @@ export const ArtistGallery = () => {
     {
       id: "5",
       image: "https://i.postimg.cc/769cxfvN/LINE-ALBUM-2025-5-30-250607-26.jpg",
+      alt: "Modern beauty photography featuring soft focus techniques and innovative lighting to redefine contemporary beauty standards",
       title: "Modern Beauty",
       artist: "Aria Thompson",
       style: "Beauty Photography",
@@ -91,6 +96,7 @@ export const ArtistGallery = () => {
     {
       id: "6",
       image: "https://i.postimg.cc/yxrbZt8g/LINE-ALBUM-2025-5-30-250607-27.jpg",
+      alt: "Abstract art piece using experimental techniques to express human emotion through color and form in digital medium",
       title: "Creative Expression",
       artist: "David Kim",
       style: "Abstract Art",
@@ -273,7 +279,7 @@ export const ArtistGallery = () => {
                   <div className="relative overflow-hidden">
                     <img
                       src={artwork.image}
-                      alt={artwork.title}
+                      alt={artwork.alt}
                       className="w-full h-auto object-cover group-hover:scale-110 transition-transform duration-700"
                     />
                     
